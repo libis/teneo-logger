@@ -89,7 +89,7 @@ module Teneo
     # @param [String] application the application name
     # @param [String] subject the subject name
     def debug(msg, *args, application: nil, subject: nil)
-      self.message :DEBUG, msg, *args, application: application, subject: subject
+      self.message *args, message: msg, severity: :DEBUG, application: application, subject: subject
     end
 
     # Send an info message to the logger.
@@ -97,7 +97,7 @@ module Teneo
     # (see #debug)
     # @param (see #debug)
     def info(msg, *args, application: nil, subject: nil)
-      self.message :INFO, msg, *args, application: application, subject: subject
+      self.message *args, message: msg, severity: :INFO, application: application, subject: subject
     end
 
     # Send a warning message to the logger.
@@ -105,7 +105,7 @@ module Teneo
     # (see #debug)
     # @param (see #debug)
     def warn(msg, *args, application: nil, subject: nil)
-      self.message :WARN, msg, *args, application: application, subject: subject
+      self.message *args, message: msg, severity: :WARN, application: application, subject: subject
     end
 
     # Send an error message to the logger.
@@ -113,7 +113,7 @@ module Teneo
     # (see #debug)
     # @param (see #debug)
     def error(msg, *args, application: nil, subject: nil)
-      self.message :ERROR, msg, *args, application: application, subject: subject
+      self.message *args, message: msg, severity: :ERROR, application: application, subject: subject
     end
 
     # Send a fatal message to the logger.
@@ -121,7 +121,7 @@ module Teneo
     # (see #debug)
     # @param (see #debug)
     def fatal_error(msg, *args, application: nil, subject: nil)
-      self.message :FATAL, msg, *args, application: application, subject: subject
+      self.message *args, message: msg, severity: :FATAL, application: application, subject: subject
     end
 
     # The method that performs the code logging action.
@@ -132,12 +132,12 @@ module Teneo
     # If the :application argument is not supplied or nil, the Teneo::Logger.config.application string will be used.
     # If that string is still nil, the class name is used.
     #
+    # @param [String] message message string
     # @param [{::Logger::Severity}] severity
-    # @param [String] msg message string
-    # @param [Object] args optional list of extra arguments
     # @param [String] application the application name
     # @param [String] subject the subject name
-    def message(severity, msg, *args, application: nil, subject: nil)
+    # @param [Object] args optional list of extra arguments
+    def message(*args, message:, severity: :INFO, application: nil, subject: nil)
       application ||= Teneo::Logger.config.application || self.class.name
       subject ||= Teneo::Logger.config.subject
       message_text = "#{application}#{subject} : #{(msg % args rescue "#{msg}#{args.empty? ? "" : " - #{args}"}")}"
