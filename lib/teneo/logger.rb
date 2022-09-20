@@ -3,7 +3,6 @@
 require_relative "logger/version"
 
 require "semantic_logger"
-require "forwardable"
 
 module Teneo
 
@@ -43,29 +42,38 @@ module Teneo
   #
 
   module Logger
-
     def self.included(klass)
       klass.include SemanticLogger::Loggable
-      klass.include ClassMethods
-    end
+      klass.class_eval do
+        def self.default_level=(level)
+          SemanticLogger.default_level = level
+        end
 
-    module ClassMethods
-      def default_level=(level)
-        SemanticLogger.default_level = level
+        def self.default_level
+          SemanticLogger.default_level
+        end
+
+        def logger(name = nil)
+          @semantic_logger ||= SemanticLogger[name || "#{self.class.name}-#{self.object_id}"]
+        end
+
+        def add_appender(**appender, &block)
+          appender = { filter: /^#{self.class.name}-#{self.object_id}$/ }.merge(appender)
+          SemanticLogger.add_appender(**appender, &block)
+        end
+
+        def tagged(*args, &block)
+          SemanticLogger.tagged(*args, &block)
+        end
       end
-
-      def default_level
-        SemanticLogger.default_level
-      end
     end
 
-    def logger
-      name ||= self.class
-      @semantic_logger ||= SemanticLogger["name-#{self.object_id}"]
+    def self.reopen
+      SemanticLogger.reopen
     end
 
-    def add_appender(**appender, &block)
-      SemanticLogger.add_appender(**appender, &block)
+    def self.flush
+      SemanticLogger.flush
     end
   end
 end
