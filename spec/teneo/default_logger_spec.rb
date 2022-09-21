@@ -73,7 +73,7 @@ class TestLogger
     proc_info = "#{Process.pid}:#{Thread.current.object_id}( #{File.basename(__FILE__)}:\\d+)?"
     tag_info = "\\[#{@tag}\\] " if @tag
     duration_info = format('\\(%0.1fms\\) ', @duration) if @duration.is_a?(Numeric)
-    class_info = "#{self.class.name}-#{self.object_id}"
+    class_info = logger_name
     message = " -- #{@message}"
     message += " -- #{@data.to_s}" if @data
     message += " -- Exception: #{@exception.class.name}: #{@exception.to_s}" if @exception

@@ -53,12 +53,16 @@ module Teneo
           SemanticLogger.default_level
         end
 
+        def logger_name
+          "#{self.class.name}-#{self.object_id}"
+        end
+
         def logger(name = nil)
-          @semantic_logger ||= SemanticLogger[name || "#{self.class.name}-#{self.object_id}"]
+          @semantic_logger ||= SemanticLogger[name || logger_name]
         end
 
         def add_appender(**appender, &block)
-          appender = { filter: /^#{self.class.name}-#{self.object_id}$/ }.merge(appender)
+          appender = { filter: /^#{logger_name}$/ }.merge(appender)
           SemanticLogger.add_appender(**appender, &block)
         end
 
