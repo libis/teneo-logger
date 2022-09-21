@@ -45,14 +45,6 @@ module Teneo
     def self.included(klass)
       klass.include SemanticLogger::Loggable
       klass.class_eval do
-        def self.default_level=(level)
-          SemanticLogger.default_level = level
-        end
-
-        def self.default_level
-          SemanticLogger.default_level
-        end
-
         def logger_name
           "#{self.class.name}-#{self.object_id}"
         end
@@ -70,6 +62,18 @@ module Teneo
           SemanticLogger.tagged(*args, &block)
         end
       end
+    end
+
+    def self.default_level=(level)
+      SemanticLogger.default_level = level
+    end
+
+    def self.default_level
+      SemanticLogger.default_level
+    end
+
+    def self.add_appender(**appender, &block)
+      SemanticLogger.add_appender(**appender, &block)
     end
 
     def self.reopen
