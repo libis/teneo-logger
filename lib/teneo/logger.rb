@@ -42,6 +42,13 @@ module Teneo
   #
 
   module Logger
+
+    class Appender < SemanticLogger::Appender
+    end
+
+    class Formatter < SemanticLogger::Formatters::Default
+    end
+
     def self.included(klass)
       klass.include SemanticLogger::Loggable
       klass.class_eval do
