@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.1](https://github.com/libis/teneo-logger/tree/v1.0.1) (2022-09-21)
+
+[Full Changelog](https://github.com/libis/teneo-logger/compare/v1.0.0...v1.0.1)
+
 ## [v1.0.0](https://github.com/libis/teneo-logger/tree/v1.0.0) (2022-09-20)
 
 [Full Changelog](https://github.com/libis/teneo-logger/compare/dfab3315cb6b81a4ef197e5282202ddec89b6c50...v1.0.0)
