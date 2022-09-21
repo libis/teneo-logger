@@ -33,6 +33,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "semantic_logger", "~> 4.11"
 
-  spec.add_development_dependency "amazing_print"
-  spec.add_development_dependency "timecop"
+  spec.add_development_dependency "amazing_print", "~> 1.4"
+  spec.add_development_dependency "timecop", "~> 0.9"
 end
