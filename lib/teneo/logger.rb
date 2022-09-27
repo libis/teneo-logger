@@ -43,7 +43,8 @@ module Teneo
 
   module Logger
 
-    class Appender < SemanticLogger::Appender
+    class Appender
+      include SemanticLogger::Appender
     end
 
     class Formatter < SemanticLogger::Formatters::Default
